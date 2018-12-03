@@ -63,8 +63,6 @@ def _post_to_dpaste(content, expires='3600', format='URL'):
     """
     Post a content to dpaste.de with expiration and return code & URL
     """
-    print(content, expires,format)
-
     try:
         r = requests.post(DPASTE_DE_API,
                           data={
