@@ -2,15 +2,18 @@
 Magic function that pushes or pulls code snippets out of pastebins.
 dpaste.de is currently supported.
 
-`%dpaste answer = 42`
+    %dpaste answer = 42
+
 pushes line content & print the dpaste url.
 
-`%%dpaste
-answer = 42`
+    %%dpaste
+    answer = 42
+
 pushes cell content & print the dpaste url.
 
-`%%dpaste {-1x -1h -1d -1w -0}
-answer = 42`
+    %%dpaste {-1x -1h -1d -1w -0}
+    answer = 42
+
 returns a dpaste url with expires duration:
 * -1x: just for one read
 * -1h: one hour (default)
