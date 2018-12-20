@@ -1,4 +1,7 @@
+import os
+
 from setuptools import setup
+
 
 LICENSE = 'MIT'
 AUTHOR = "HerveMignot"
@@ -24,9 +27,16 @@ CLASSIFIERS = [
     'Topic :: Scientific/Engineering',
 ]
 
+
+# Get the long description from the README file
+here = os.path.abspath(os.path.dirname(__file__))
+with open(os.path.join(here, "README.rst")) as f:
+    long_description = f.read()
+
 setup(name='dpaste_magic',
-      version='0.1.0',
+      version='0.1.4',
       description='Magic command to dpaste / get line & cell content',
+      long_description=long_description,
       keywords='pastebin dpaste magic command IPython Jupyter Jupyterlab',
       url=URL,
       author=AUTHOR,

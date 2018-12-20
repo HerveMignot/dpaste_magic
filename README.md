@@ -58,5 +58,5 @@ and then use the function in your cell to dpaste its content.
 
 ## TO DO
 
-* improve tests
-* code load & unload functions
+* increase tests range
+* code unload function
