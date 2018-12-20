@@ -23,14 +23,17 @@ pushes cell content & print the dpaste url.
     answer = 42
 
 returns a dpaste url with expires duration:
+
 - -1x: just for one read
 - -1h: one hour (default)
 - -1d: one day
 - -1w: one week
 - -0: never
+
 These are the supported expiration time supported by dpaste.de.
 
 Options:
+
 - -o: return URL as value (for storage in a variable)
 - -s: silent mode (URL not printed)
 

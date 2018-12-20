@@ -36,3 +36,5 @@ def test_dpaste_cell():
 #     content = requests.get(url + '/raw')
 #     # run two times for 404
 #     pass
+
+# Testing Options

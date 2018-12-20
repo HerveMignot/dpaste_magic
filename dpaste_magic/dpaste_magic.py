@@ -56,7 +56,7 @@ _durations = {
     'x': 'onetime', 'h': '3600', 'd': '86000', 'w': '604800',
 }
 DEFAULT_DURATION = 'h'
-DURATION_OPTIONS = '1:g:os' # '01:g:os' with never
+_DURATION_OPTIONS = '1:g:os' # '01:g:os' with never
 
 # DPASTE.DE URLs
 DPASTE_DE_URL = 'https://dpaste.de/'
@@ -161,7 +161,7 @@ def dpaste(line, cell=None, return_url=False):
 
     """
     try:
-        options, stmt = getopt.getopt(line.split(), DURATION_OPTIONS)
+        options, stmt = getopt.getopt(line.split(), _DURATION_OPTIONS)
     except getopt.GetoptError as error:
         raise UsageError('Please check options')
 
