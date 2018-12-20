@@ -1,1 +1,1 @@
-from .dpaste_magic import *
+__all__ = ['dpaste_magic']
