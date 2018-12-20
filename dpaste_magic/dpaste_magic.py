@@ -35,9 +35,6 @@ retrieves snippet from dpaste.de url (with or without /raw).
 """
 from __future__ import print_function
 
-
-__version__ = '0.1.0'
-
 import logging
 import sys
 import getopt
@@ -47,6 +44,7 @@ import requests
 from IPython import get_ipython
 from IPython.core.magic import register_line_cell_magic, register_line_magic
 from IPython.core.error import UsageError
+
 
 # API supported durations, but currently some are not available with dpaste.de
 # _durations = {
