@@ -15,33 +15,24 @@ import requests
 import dpaste_magic
 
 
-def test_post_to_dpaste():
-    source = 'print(42)'
-
-    # Post to dpaste.de
-    code, url = dpaste_magic._post_to_dpaste(source)
-    assert code == 0
-
-    # Get from dpaste.de
-    content = requests.get(url.strip('"'))
-    assert source == content.text
-
-
 def test_dpaste_line():
     line = 'print(42)'
     url = dpaste_magic.dpaste(line=line, cell=None, return_url=True)
-    content = requests.get(url)
+    content = requests.get(url + '/raw')
     assert line == content.text
 
 
 def test_dpaste_cell():
     cell = 'print(42)'
-    url = dpaste_magic.dpaste(line=None, cell=cell, return_url=True)
-    content = requests.get(url)
-    assert line == content.text
+    url = dpaste_magic.dpaste(line='', cell=cell, return_url=True)
+    content = requests.get(url + '/raw')
+    assert cell == content.text
     pass
 
 
-def test_dpaste_expires_once():
-    # run two times for 404
-    pass
+# def test_dpaste_expires_once():
+#     line = 'print(42)'
+#     url = dpaste_magic.dpaste(line=line, cell=None, return_url=True)
+#     content = requests.get(url + '/raw')
+#     # run two times for 404
+#     pass

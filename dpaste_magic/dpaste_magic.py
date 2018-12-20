@@ -43,7 +43,7 @@ import sys
 import getopt
 import requests
 
-from contextlib import redirect_stdout
+#from contextlib import redirect_stdout
 from IPython import get_ipython
 from IPython.core.magic import register_line_cell_magic, register_line_magic
 from IPython.core.error import UsageError

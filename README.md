@@ -22,6 +22,10 @@ returns a dpaste url with expires duration:
 * -0: never
 These are the supported expiration time supported by dpaste.de.
 
+Options:
+* -o: return URL as value (for storage in a variable)
+* -s: silent mode (URL not printed)
+
 `my_url = %dpaste -o answer = 42`
 push code on line, prints & stores url in `my_url` variable.
 
@@ -50,3 +54,9 @@ First load the magic in a cell:
 and then use the function in your cell to dpaste its content.
 
 `%%dpaste`, `%dpaste` or `%getdpaste`.
+
+
+## TO DO
+
+* improve tests
+* code load & unload functions
