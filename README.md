@@ -1,10 +1,10 @@
 # dpaste_magic
 Magic function that pushes or pulls code snippets out of pastebins.
 dpaste.de is currently supported.
-
+<pre>
     %dpaste answer = 42
-    _https://dpaste.de/aBCD_
-
+    <i>https://dpaste.de/aBCD</i>
+</pre>
 pushes line content & print the dpaste url.
 
     %%dpaste
