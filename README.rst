@@ -4,11 +4,14 @@ dpaste\_magic
 Magic function that pushes or pulls code snippets out of pastebins.
 dpaste.de is currently supported.
 
+Pushing code & cells
+--------------------
+
 ::
 
     %dpaste answer = 42
     ---
-    https://dpaste.de/aBCD
+    https://dpaste.de/XYZ
 
 pushes line content & print the dpaste url.
 
@@ -17,7 +20,7 @@ pushes line content & print the dpaste url.
     %%dpaste
     answer = 42
     ---
-    https://dpaste.de/aBCD
+    https://dpaste.de/XYZ
 
 pushes cell content & print the dpaste url.
 
@@ -26,7 +29,7 @@ pushes cell content & print the dpaste url.
     %%dpaste {-1x -1h -1d -1w -0}
     answer = 42
     ---
-    https://dpaste.de/aBCD
+    https://dpaste.de/XYZ
 
 returns a dpaste url with expires duration:
 
@@ -43,10 +46,10 @@ Options:
 - -o: return URL as value (for storage in a variable)
 - -s: silent mode (URL not printed)
 
-``my_url = %dpaste -o answer = 42`` push code on line, prints & stores
+``my_url = %dpaste -o answer = 42`` pushes code online, prints & stores
 url in ``my_url`` variable.
 
-``my_url = %dpaste -o -s answer = 42`` push code on line & stores url in
+``my_url = %dpaste -o -s answer = 42`` pushes code online & stores url in
 ``my_url`` variable (silent mode, no print).
 
 Getting back the paste
@@ -56,7 +59,7 @@ Getting back the paste
 
     %getdpaste XYZ
 
-retrieves snippet from XYZ dpaste hash or URL and change cell to:
+retrieves snippet from XYZ dpaste hash or URL and changes cell to:
 ::
     # %load https://dpaste.de/XYZ/raw
     answer = 42
@@ -65,7 +68,7 @@ With `%dpaste -g` get option:
 ::
     %dpaste -g XYZ
 
-retrieves snippet from XYZ dpaste hash or URL and change cell to:
+retrieves snippet from XYZ dpaste hash or URL and changes cell to:
 ::
     # %load https://dpaste.de/XYZ/raw
     answer = 42

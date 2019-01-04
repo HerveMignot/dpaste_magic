@@ -1,6 +1,8 @@
 # dpaste_magic
 Magic function that pushes or pulls code snippets out of pastebins.
 dpaste.de is currently supported.
+
+### Pushing code & cells
 <pre>
   %dpaste answer = 42
   <i>https://dpaste.de/XYZ</i>
