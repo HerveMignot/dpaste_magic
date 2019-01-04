@@ -36,12 +36,12 @@ push code on line, prints & stores url in `my_url` variable.
 push code on line & stores url in `my_url` variable (silent mode, no print).
 
     %dpaste -g XYZ
-    answer = 42
+    _answer = 42_
 
 retrieves snippet from XYZ dpaste hash or URL.
 
     %getdpaste XYZ
-    answer = 42
+    _answer = 42_
 
 retrieves snippet from XYZ dpaste hash or URL (alias for `dpaste -g`).
 

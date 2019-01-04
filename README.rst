@@ -7,7 +7,7 @@ dpaste.de is currently supported.
 ::
 
     %dpaste answer = 42
-    https://dpaste.de/aBCD
+    *https://dpaste.de/aBCD*
 
 pushes line content & print the dpaste url.
 
@@ -15,7 +15,7 @@ pushes line content & print the dpaste url.
 
     %%dpaste
     answer = 42
-    https://dpaste.de/aBCD
+    *https://dpaste.de/aBCD*
 
 pushes cell content & print the dpaste url.
 
@@ -23,7 +23,7 @@ pushes cell content & print the dpaste url.
 
     %%dpaste {-1x -1h -1d -1w -0}
     answer = 42
-    https://dpaste.de/aBCD
+    *https://dpaste.de/aBCD*
 
 returns a dpaste url with expires duration:
 
@@ -49,14 +49,14 @@ url in ``my_url`` variable.
 ::
 
     %dpaste -g XYZ
-    answer = 42
+    *answer = 42*
 
 retrieves snippet from XYZ dpaste hash or URL.
 
 ::
 
     %getdpaste XYZ
-    answer = 42
+    *answer = 42*
 
 retrieves snippet from XYZ dpaste hash or URL (alias for ``dpaste -g``).
 
