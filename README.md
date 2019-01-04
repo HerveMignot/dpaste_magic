@@ -7,15 +7,15 @@ dpaste.de is currently supported.
 </pre>
 pushes line content & print the dpaste url.
 <pre>
-    %%dpaste
-    answer = 42
-    <i>https://dpaste.de/XYZ</i>
+  %%dpaste
+  answer = 42
+  <i>https://dpaste.de/XYZ</i>
 </pre>
 pushes cell content & print the dpaste url.
 <pre>
-    %%dpaste {-1x -1h -1d -1w -0}
-    answer = 42
-    <i>https://dpaste.de/XYZ</i>
+  %%dpaste {-1x -1h -1d -1w -0}
+  answer = 42
+  <i>https://dpaste.de/XYZ</i>
 </pre>
 returns a dpaste url with expires duration:
 * -1x: just for one read
@@ -42,7 +42,7 @@ retrieves snippet from XYZ dpaste hash or URL.
 <pre>
   %getdpaste XYZ
   <i>answer = 42</i>
-<pre>
+</pre>
 retrieves snippet from XYZ dpaste hash or URL (alias for `dpaste -g`).
 
 
