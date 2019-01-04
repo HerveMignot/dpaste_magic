@@ -2,21 +2,21 @@
 Magic function that pushes or pulls code snippets out of pastebins.
 dpaste.de is currently supported.
 <pre>
-    %dpaste answer = 42
-    <i>https://dpaste.de/aBCD</i>
+  %dpaste answer = 42
+  <i>https://dpaste.de/XYZ</i>
 </pre>
 pushes line content & print the dpaste url.
-
+<pre>
     %%dpaste
     answer = 42
-    _https://dpaste.de/aBCD_
-
+    <i>https://dpaste.de/XYZ</i>
+</pre>
 pushes cell content & print the dpaste url.
-
+<pre>
     %%dpaste {-1x -1h -1d -1w -0}
     answer = 42
-    _https://dpaste.de/aBCD_
-
+    <i>https://dpaste.de/XYZ</i>
+</pre>
 returns a dpaste url with expires duration:
 * -1x: just for one read
 * -1h: one hour (default)
@@ -34,15 +34,15 @@ push code on line, prints & stores url in `my_url` variable.
 
 `my_url = %dpaste -o -s answer = 42`
 push code on line & stores url in `my_url` variable (silent mode, no print).
-
-    %dpaste -g XYZ
-    _answer = 42_
-
+<pre>
+  %dpaste -g XYZ
+  <i>answer = 42</i>
+</pre>
 retrieves snippet from XYZ dpaste hash or URL.
-
-    %getdpaste XYZ
-    _answer = 42_
-
+<pre>
+  %getdpaste XYZ
+  <i>answer = 42</i>
+<pre>
 retrieves snippet from XYZ dpaste hash or URL (alias for `dpaste -g`).
 
 
