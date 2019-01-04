@@ -3,6 +3,7 @@ Magic function that pushes or pulls code snippets out of pastebins.
 dpaste.de is currently supported.
 <pre>
   %dpaste answer = 42
+  <hr width="20%" size="1">
   <i>https://dpaste.de/XYZ</i>
 </pre>
 pushes line content & print the dpaste url.
