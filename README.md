@@ -41,7 +41,7 @@ push code on line & stores url in `my_url` variable (silent mode, no print).
 <pre>
   %getdpaste XYZ
 </pre>
-retrieves snippet from XYZ dpaste hash or URL and change cell to:
+retrieves snippet from XYZ dpaste hash or URL and changes cell to:
 <pre>
   # %load https://dpaste.de/XYZ/raw
   answer = 42
@@ -51,7 +51,7 @@ With `%dpaste -g` get option:
 <pre>
   %dpaste -g XYZ
 </pre>
-retrieves snippet from XYZ dpaste hash or URL and change cell to:
+retrieves snippet from XYZ dpaste hash or URL and changes cell to:
 <pre>
   # %load https://dpaste.de/XYZ/raw
   answer = 42
