@@ -34,16 +34,26 @@ push code on line, prints & stores url in `my_url` variable.
 
 `my_url = %dpaste -o -s answer = 42`
 push code on line & stores url in `my_url` variable (silent mode, no print).
-<pre>
-  %dpaste -g XYZ
-  <i>answer = 42</i>
-</pre>
-retrieves snippet from XYZ dpaste hash or URL.
+
+### Getting back the paste
 <pre>
   %getdpaste XYZ
-  <i>answer = 42</i>
 </pre>
-retrieves snippet from XYZ dpaste hash or URL (alias for `dpaste -g`).
+retrieves snippet from XYZ dpaste hash or URL and change cell to:
+<pre>
+  # %load https://dpaste.de/XYZ/raw
+  answer = 42
+</pre>
+
+With `%dpaste -g` get option:
+<pre>
+  %dpaste -g XYZ
+</pre>
+retrieves snippet from XYZ dpaste hash or URL and change cell to:
+<pre>
+  # %load https://dpaste.de/XYZ/raw
+  answer = 42
+</pre>
 
 
 ## Installation
