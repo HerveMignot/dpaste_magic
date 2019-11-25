@@ -16,19 +16,31 @@ returns a dpaste url for cell.
 %dpaste or %%dpaste {-1x -1h -1d -1w -0}
 post with expires duration (-1x for one time/two views, -0 is forever).
 
-%dpaste -g XYZ
+%dpaste -g WXYZ
 answer = 42
-retrieves snippet from XYZ url hash.
+retrieves snippet from WXYZ url hash.
 
-%getdpaste XYZ
+%getdpaste WXYZ
 answer = 42
-retrieves snippet from XYZ url hash.
+retrieves snippet from WXYZ url hash.
 
-%dpaste -g <dpaste.de url>
+%dpaste -g https://dpaste.de/WXYZ
 answer = 42
 retrieves snippet from dpaste.de url (with or without /raw).
 
-%getdpaste -g <dpaste.de url>
+%dpaste -u -g https://dpaste.de/WXYZ
+# https://dpaste.de/WXYZ/raw
+
+answer = 42
+retrieves snippet from dpaste.de url (with or without /raw).
+
+%getdpaste https://dpaste.de/WXYZ
+answer = 42
+retrieves snippet from dpaste.de url (with or without /raw).
+
+%getdpaste -u https://dpaste.de/WXYZ
+# https://dpaste.de/WXYZ/raw
+
 answer = 42
 retrieves snippet from dpaste.de url (with or without /raw).
 
@@ -39,6 +51,8 @@ import logging
 import sys
 import getopt
 import requests
+
+from html.parser import HTMLParser
 
 #from contextlib import redirect_stdout
 from IPython import get_ipython
@@ -56,7 +70,9 @@ _durations = {
     'x': 'onetime', 'h': '3600', 'd': '86000', 'w': '604800',
 }
 DEFAULT_DURATION = 'h'
-_DURATION_OPTIONS = '1:g:os' # '01:g:os' with never
+_DURATION_OPTIONS = '1:g:uos' # '01:g:os' with never
+
+_GETDPASTE_OPTIONS = 'u'
 
 # DPASTE.DE URLs
 DPASTE_DE_URL = 'https://dpaste.de/'
@@ -133,24 +149,24 @@ def dpaste(line, cell=None, return_url=False):
     --------
     ::
       [1]: %dpaste print(42)
-      https://dpaste.de/XYZ
+      https://dpaste.de/WXYZ
 
       [2]: %%dpaste -1m
          ...: print(42)
          ...:
-      https://dpaste.de/WYZ
+      https://dpaste.de/WXYZ
 
-      [3]: %dpaste -gWYZ
+      [3]: %dpaste -gWXYZ
          ...: print(42)
          ...:
 
-      [4]: %dpaste -g https://dpaste.de/WYZ
+      [4]: %dpaste -g https://dpaste.de/WXYZ
          ...: print(42)
          ...:
 
       [5]: url = %dpaste -o print(42)
          ...:
-      https://dpaste.de/WYZ
+      https://dpaste.de/WXYZ
 
       [6]: url = %dpaste -o -s print(42)
          ...:
@@ -171,11 +187,15 @@ def dpaste(line, cell=None, return_url=False):
         stmt = ' '.join(stmt)
     else:
         stmt = cell
+        for c in range(-5, 0):
+            print(ord(cell[c]))
 
     hash = [v for o, v in options if o == '-g']
     if len(hash) >= 1:
         # Take the first value
-        getdpaste(hash[0])
+        url_mode = '-u' in {o for o, _ in options}
+        _x = '-u ' + hash[0] if url_mode else hash[0]
+        getdpaste(_x)
         return
 
     silent_mode = '-s' in {o for o, _ in options}
@@ -209,21 +229,47 @@ def dpaste(line, cell=None, return_url=False):
     return url if return_url or output_url else None
 
 
+class PreParser(HTMLParser):
+    """HTML Parser for extracting raw text in <pre></pre> division as
+    returned by dpaste.de
+    """
+    def __init__(self):
+        HTMLParser.__init__(self)
+        self.recording = False
+        self.pre = ""
+
+    def handle_starttag(self, tag, attributes):
+        if tag != 'pre':
+            return
+        self.recording = True
+
+    def handle_endtag(self, tag):
+        if tag == 'pre' and self.recording:
+            self.recording = False
+
+    def handle_data(self, data):
+        if self.recording:
+            self.pre += data
+
+
 @register_line_magic
 def getdpaste(line, cell=None):
     """Get code snippet from dpaste.de
 
     Usage, in line mode:
-        %getdpaste [<dpaste hash>|<dpaste url>]
+        %getdpaste [-u] [<dpaste hash>|<dpaste url>]
+
+    Options:
+        -u: prepends URL as Python comment.
 
     Examples
     --------
     ::
-      [1]: %getdpaste WYZ
+      [1]: %getdpaste WXYZ
          ...: print(42)
          ...:
 
-      [2]: %getdpaste https://dpaste.de/WYZ
+      [2]: %getdpaste https://dpaste.de/WXYZ
          ...: print(42)
          ...:
 
@@ -232,13 +278,31 @@ def getdpaste(line, cell=None):
          ...:
 
     """
-    if line.startswith(DPASTE_DE_URL):
-        # Quit specific to dpaste.de
-        url = line + ('' if line.endswith('/raw') else '/raw')
-    else:
-        url = GET_DPASTE_DE_URL.format(line)
+    try:
+        options, stmt = getopt.getopt(line.split(), _GETDPASTE_OPTIONS)
+    except getopt.GetoptError as error:
+        raise UsageError('Please check options')
 
-    # Use %load magic to do the job.
+    url_mode = '-u' in {o for o, _ in options}
+
+    if len(stmt) != 1:
+        raise UsageError('Only one hash currently supported')
+    else:
+        stmt = stmt[0]
+
+    if stmt.startswith(DPASTE_DE_URL):
+        # Quit specific to dpaste.de
+        url = stmt + ('' if stmt.endswith('/raw') else '/raw')
+    else:
+        url = GET_DPASTE_DE_URL.format(stmt)
+
+    # dpaste.de has disabled raw mode as plain text due to abuse
+    # It is now returning a HTML version.
+    # Cannot yse %load magic to do the job anymore.
     ipython = get_ipython()
-    ipython.magic("load {}".format(url))
+    contents = ipython.find_user_code(url) #TODO: catch HTTPError 404
+    parser = PreParser()
+    parser.feed(contents)
+    ipython.set_next_input(f"#{url}\n\n" + parser.pre if url_mode else parser.pre,
+                           replace=True)
     return
