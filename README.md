@@ -15,7 +15,7 @@ pushes line content & print the dpaste url.
 </pre>
 pushes cell content & print the dpaste url.
 <pre>
-  %%dpaste {-1x -1h -1d -1w -0}
+  %%dpaste {-1x -1h -1d -1w}
   answer = 42
   <i>https://dpaste.org/WXYZ</i>
 </pre>
@@ -24,7 +24,7 @@ returns a dpaste url with expires duration:
 * -1h: one hour (default)
 * -1d: one day
 * -1w: one week
-* -0: never
+
 These are the supported expiration time supported by dpaste.org.
 
 Options:
