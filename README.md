@@ -1,23 +1,23 @@
 # dpaste_magic
 Magic function that pushes or pulls code snippets out of pastebins.
-dpaste.de is currently supported.
+dpaste.org is currently supported.
 
 ### Pushing code & cells
 <pre>
   %dpaste answer = 42
-  <i>https://dpaste.de/WXYZ</i>
+  <i>https://dpaste.org/WXYZ</i>
 </pre>
 pushes line content & print the dpaste url.
 <pre>
   %%dpaste
   answer = 42
-  <i>https://dpaste.de/WXYZ</i>
+  <i>https://dpaste.org/WXYZ</i>
 </pre>
 pushes cell content & print the dpaste url.
 <pre>
   %%dpaste {-1x -1h -1d -1w -0}
   answer = 42
-  <i>https://dpaste.de/WXYZ</i>
+  <i>https://dpaste.org/WXYZ</i>
 </pre>
 returns a dpaste url with expires duration:
 * -1x: just for one read
@@ -25,7 +25,7 @@ returns a dpaste url with expires duration:
 * -1d: one day
 * -1w: one week
 * -0: never
-These are the supported expiration time supported by dpaste.de.
+These are the supported expiration time supported by dpaste.org.
 
 Options:
 * -o: return URL as value (for storage in a variable)
@@ -51,7 +51,7 @@ retrieves snippet from WXYZ dpaste hash or URL and changes cell to:
 </pre>
 add retrieved URL as a Python comment in first line:
 <pre>
-  #https://dpaste.de/WXYZ/raw
+  #https://dpaste.org/WXYZ/raw
 
   answer = 42
 </pre>
