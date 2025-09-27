@@ -52,8 +52,6 @@ import sys
 import getopt
 import requests
 
-from html.parser import HTMLParser
-
 from IPython import get_ipython
 from IPython.core.magic import register_line_cell_magic, register_line_magic
 from IPython.core.error import UsageError
@@ -225,29 +223,32 @@ def dpaste(line, cell=None, return_url=False):
     return url if return_url or output_url else None
 
 
-class PreParser(HTMLParser):
-    """HTML Parser for extracting raw text in <pre></pre> division as
-    returned by dpaste.org
+@register_line_magic
+def getdpaste(line, cell=None):
+    """Get code snippet from dpaste.org
+
+    Usage, in line mode:
+        %getdpaste [-u] [<dpaste hash>|<dpaste url>]
+
+    Options:
+        -u: prepends URL as Python comment.
+
+    Examples
+    --------
+    ::
+      [1]: %getdpaste WXYZ
+         ...: print(42)
+         ...:
+
+      [2]: %getdpaste https://dpaste.org/WXYZ
+         ...: print(42)
+         ...:
+
+      [3]: %getdpaste $url
+         ...: print(42)
+         ...:
+
     """
-    def __init__(self):
-        HTMLParser.__init__(self)
-        self.recording = False
-        self.pre = ""
-
-    def handle_starttag(self, tag, attributes):
-        if tag != 'pre':
-            return
-        self.recording = True
-
-    def handle_endtag(self, tag):
-        if tag == 'pre' and self.recording:
-            self.recording = False
-
-    def handle_data(self, data):
-        if self.recording:
-            self.pre += data
-
-
 @register_line_magic
 def getdpaste(line, cell=None):
     """Get code snippet from dpaste.org
@@ -293,20 +294,18 @@ def getdpaste(line, cell=None):
         url = GET_DPASTE_DE_URL.format(stmt)
         print(url)
 
-    # dpaste.org has disabled raw mode as plain text due to abuse
-    # It is now returning a HTML version.
-    # Cannot use %load magic to do the job anymore.
-    # Also, a user-agent needs to be sent. Cannot use find_user_code anymore.
-    # See: https://github.com/bartTC/dpaste/issues/141
     ipython = get_ipython()
-    #contents = ipython.find_user_code(url)
 
     #TODO: catch HTTPError 404 to display nicer does not exist message?
-    r = requests.get(url, headers={'User-Agent': USER_AGENT})
-    contents = r.text
-    parser = PreParser()
-    parser.feed(contents)
+    response = requests.get(url, headers={'User-Agent': USER_AGENT})
+    if response.status_code == 200:
+      contents = response.text
+    elif response.status_code == 404:
+      raise ValueError("This dpaste does not exist (404)")
+    else:
+      raise ValueError(f"Error from dpaste {response.code}")
 
-    ipython.set_next_input(f"#{url}\n\n" + parser.pre if url_mode else parser.pre,
-                           replace=True)
+    if url_mode:
+        contents = f"#{url}\n\n" + contents
+    ipython.set_next_input(contents, replace=True)
     return
