@@ -1,7 +1,7 @@
 Changelog
 =========
 
-0.3 (2025-09-27):
+0.3.0 (2025-09-27):
 -------------------
 
 - Remove HTML parsing in getdpaste as /raw returns raw paste again.
