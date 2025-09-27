@@ -34,11 +34,11 @@ with open(os.path.join(here, 'README.md'), encoding='utf-8') as f:
     long_description = f.read()
 
 setup(name='dpaste_magic',
-      version='0.2.1',
+      version='0.3',
       description='Magic command to dpaste / get line & cell content',
       long_description=long_description,
       long_description_content_type='text/markdown',
-      keywords='pastebin dpaste magic command IPython Jupyter Jupyterlab',
+      keywords='pastebin dpaste magic command IPython Jupyter Jupyterlab Colab',
       url=URL,
       author=AUTHOR,
       author_email=EMAIL,
