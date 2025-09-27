@@ -1,6 +1,12 @@
 Changelog
 =========
 
+0.3 (2025-09-27):
+-------------------
+
+- Remove HTML parsing in getdpaste as /raw returns raw paste again.
+- Add status_code management in getdpaste to raise exception when not 200.
+
 0.2.1 (2019-12-14):
 -------------------
 
