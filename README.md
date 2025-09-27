@@ -85,4 +85,3 @@ and then use the function in your cell to dpaste its content.
 
 * increase tests range
 * code unload function
-* catch HTTPError exception 404 to display friendly message
